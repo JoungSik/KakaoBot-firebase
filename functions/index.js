@@ -5,6 +5,11 @@ const express = require("express");
 admin.initializeApp();
 const app = express();
 
+app.get("/", (req, res) => {
+  const result = { "name": "JoungSik" };
+  res.status(200).json(result);
+});
+
 app.get("/hello", (req, res) => {
   const date = new Date();
   const hours = (date.getHours() % 12) + 1;  // London is UTC + 1hr;
@@ -23,10 +28,9 @@ app.get("/hello", (req, res) => {
   </html>`);
 });
 
-// This HTTPS endpoint can only be accessed by your Firebase Users.
-// Requests need to be authorized by providing an `Authorization` HTTP header
-// with value `Bearer <Firebase ID Token>`.
-exports.app = functions.https.onRequest(app);
+exports.v1 = functions.https.onRequest(app);
+
+
 // const functions = require("firebase-functions");
 //
 // // Create and Deploy Your First Cloud Functions
