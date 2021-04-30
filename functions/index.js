@@ -6,6 +6,7 @@ admin.initializeApp();
 const app = express();
 
 const hangangRouter = require("../functions/route/hangang");
+const covidRouter = require("../functions/route/covid");
 
 app.get("/", (req, res) => {
   const result = { "name": "JoungSik" };
@@ -13,6 +14,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/hangang", hangangRouter);
+app.use("/covid", covidRouter);
 
 app.get("/hello", (req, res) => {
   const date = new Date();
