@@ -6,7 +6,9 @@ admin.initializeApp();
 const app = express();
 
 const covidRouter = require("./route/covid");
+const weatherRouter = require("./route/weather");
 
 app.use("/covid", covidRouter);
+app.use("/weather", weatherRouter);
 
 module.exports.v1 = functions.https.onRequest(app);
