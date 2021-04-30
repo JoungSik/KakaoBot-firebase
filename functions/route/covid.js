@@ -3,7 +3,10 @@ const router = require("express").Router();
 const _ = require("lodash");
 
 const moment = require("moment");
+require("moment-timezone");
+
 moment.locale("ko");
+moment.tz.setDefault("Asia/Seoul");
 
 const local_covid = require("../api/covid");
 
