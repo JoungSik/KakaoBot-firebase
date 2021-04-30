@@ -8,7 +8,7 @@
 **/.firebaserc
 
 ### Firebase Patch ###
-.runtimeconfig.json
+functions/.runtimeconfig.json
 .firebase/
 
 ### Node ###
