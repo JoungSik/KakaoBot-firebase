@@ -5,10 +5,14 @@ const express = require("express");
 admin.initializeApp();
 const app = express();
 
+const hangangRouter = require("../functions/route/hangang");
+
 app.get("/", (req, res) => {
   const result = { "name": "JoungSik" };
   res.status(200).json(result);
 });
+
+app.use("/hangang", hangangRouter);
 
 app.get("/hello", (req, res) => {
   const date = new Date();
