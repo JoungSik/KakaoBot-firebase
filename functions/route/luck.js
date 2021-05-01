@@ -3,12 +3,6 @@ const router = require("express").Router();
 
 const _ = require("lodash");
 
-const moment = require("moment");
-require("moment-timezone");
-
-moment.locale("ko");
-moment.tz.setDefault("Asia/Seoul");
-
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 
@@ -42,6 +36,8 @@ const convert_type = (type) => {
       return "10";
     case "돼지띠":
       return "11";
+    default:
+      return null;
   }
 };
 
@@ -50,27 +46,31 @@ router.get("/", (req, res) => {
     res.status(200).json({ msg: "띠를 입력해주세요." });
   } else {
     const type = convert_type(req.query.type);
-    luck(type).then(r => {
-      const result = iconv.decode(r.data, "EUC-KR");
-      const dom = new JSDOM(result);
+    if (_.isEmpty(type)) {
+      res.status(200).json({ msg: "운세를 가져오는데 실패했습니다.\n쥐띠, 소띠, 호랑이띠, 토끼띠, 용띠, 뱀띠, 말띠, 양띠, 원숭이띠, 닭띠, 개띠, 돼지띠 중에서 입력해주세요." });
+    } else {
+      luck(type).then(r => {
+        const result = iconv.decode(r.data, "EUC-KR");
+        const dom = new JSDOM(result);
 
-      const date = dom.window.document.querySelector("strong.date").textContent;
-      const total = dom.window.document.querySelector("td#con_txt").textContent;
+        const date = dom.window.document.querySelector("strong.date").textContent;
+        const total = dom.window.document.querySelector("td#con_txt").textContent;
 
-      let answers = [];
-      const years = dom.window.document.querySelectorAll("div.today_year");
-      for (let i = 0; i < 2; i++) {
-        const year = years[i].querySelector("td.year").textContent;
-        const answer = years[i].querySelector("div.year_td_box02").textContent;
-        answers.push(`${year.substring(2, 4)}년생, ${answer}`);
-      }
+        let answers = [];
+        const years = dom.window.document.querySelectorAll("div.today_year");
+        for (let i = 0; i < 2; i++) {
+          const year = years[i].querySelector("td.year").textContent;
+          const answer = years[i].querySelector("div.year_td_box02").textContent;
+          answers.push(`${year.substring(2, 4)}년생, ${answer}`);
+        }
 
-      const msg = `${date} ${req.query.type} 운세\n${total}\n\n` + answers.join("\n\n");
-      res.status(200).json({ msg: msg });
-    }).catch(e => {
-      functions.logger.error(e);
-      res.status(200).json({ msg: "운세를 가져오는데 실패했습니다." });
-    })
+        const msg = `${date} ${req.query.type} 운세\n${total}\n\n` + answers.join("\n\n");
+        res.status(200).json({ msg: msg });
+      }).catch(e => {
+        functions.logger.error(e);
+        res.status(200).json({ msg: "운세를 가져오는데 실패했습니다." });
+      });
+    }
   }
 });
 
