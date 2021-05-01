@@ -100,7 +100,7 @@ router.get("/", (req, res) => {
                   messages.push(convert_temp(temps));
                 }
 
-                res.status(200).json({ msg: msg + messages.join("\n\n") });
+                res.status(200).json({ msg: msg + messages.join("\n") });
               }
             }).catch(e => {
               functions.logger.error(e);
