@@ -7,8 +7,10 @@ const app = express();
 
 const covidRouter = require("./route/covid");
 const weatherRouter = require("./route/weather");
+const luckRouter = require("./route/luck");
 
 app.use("/covid", covidRouter);
 app.use("/weather", weatherRouter);
+app.use("/luck", luckRouter);
 
 module.exports.v1 = functions.https.onRequest(app);
