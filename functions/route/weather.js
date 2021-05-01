@@ -82,7 +82,7 @@ router.get("/", (req, res) => {
               if (r.data.response.header.resultCode !== "00") {
                 res.status(200).json({ msg: "날씨를 가져오지 못했습니다." });
               } else {
-                let msg = `${moment(`${date} ${convert_time}`, "YYYYMMDD hhmm").format("LLLL")} 측정 기준 [${target}] 날씨 : `;
+                let msg = `${moment(`${date} ${convert_time}`, "YYYYMMDD hhmm").format("LLLL")} 측정 기준 [${target}] 날씨\n\n`;
                 const messages = [];
 
                 const sky = r.data.response.body.items.item.filter(item => item.category === "SKY")[0];
@@ -100,7 +100,7 @@ router.get("/", (req, res) => {
                   messages.push(convert_temp(temps));
                 }
 
-                res.status(200).json({ msg: msg + messages.join(", ") });
+                res.status(200).json({ msg: msg + messages.join("\n\n") });
               }
             }).catch(e => {
               functions.logger.error(e);
