@@ -50,7 +50,7 @@ const convert_pty = (value) => {
 };
 
 const convert_temp = (values) => {
-  const temp = values.sort((a, b) => parseInt(a.fcstTime) - parseInt(b.fcstTime))[1];
+  const temp = values.sort((a, b) => parseInt(a.fcstTime) - parseInt(b.fcstTime))[0];
   let time = temp.fcstTime.length === 3 ? "0" + temp.fcstTime.substring(0, 2) : temp.fcstTime.substring(0, 2);
   return `${time}시 ${temp.fcstValue}°C`;
 };
@@ -58,7 +58,7 @@ const convert_temp = (values) => {
 router.get("/", (req, res) => {
   const address = _.isEmpty(req.query.address) ? null : req.query.address;
   const date = moment().format("YYYYMMDD");
-  const time = moment().format("hhmm");
+  const time = moment().format("HHmm");
   const convert_time = convert_weather_time(time);
 
   if (_.isEmpty(address)) {
@@ -81,7 +81,7 @@ router.get("/", (req, res) => {
               if (r.data.response.header.resultCode !== "00") {
                 res.status(200).json({ msg: "날씨를 가져오지 못했습니다." });
               } else {
-                let msg = `${moment(`${date} ${convert_time}`, "YYYYMMDD hhmm").format("LLLL")} 측정 기준 [${target}] 날씨\n\n`;
+                let msg = `${moment(`${date} ${convert_time}`, "YYYYMMDD HHmm").format("LLLL")} 측정 기준 [${target}] 날씨\n\n`;
                 const messages = [];
 
                 const sky = r.data.response.body.items.item.filter(item => item.category === "SKY")[0];
