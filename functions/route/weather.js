@@ -50,9 +50,8 @@ const convert_pty = (value) => {
 };
 
 const convert_temp = (values) => {
-  const temp = values.sort((a, b) => parseInt(a.fcstTime) - parseInt(b.fcstTime))[0];
-  let time = temp.fcstTime.length === 3 ? "0" + temp.fcstTime : temp.fcstTime;
-  time = parseInt(time.substring(0, 2)) >= 12 ? "오후 " + time.substring(0, 2) : "오전 " + time.substring(0, 2);
+  const temp = values.sort((a, b) => parseInt(a.fcstTime) - parseInt(b.fcstTime))[1];
+  let time = temp.fcstTime.length === 3 ? "0" + temp.fcstTime.substring(0, 2) : temp.fcstTime.substring(0, 2);
   return `${time}시 ${temp.fcstValue}°C`;
 };
 
