@@ -2,8 +2,9 @@ const functions = require('firebase-functions');
 const axios = require("axios");
 
 const weather = ({ x, y, date, time }) =>
-  axios.get(`http://apis.data.go.kr/1360000/VilageFcstInfoService/getUltraSrtFcst?serviceKey=${functions.config().data_ko.key}`, {
+  axios.get("http://apis.data.go.kr/1360000/VilageFcstInfoService/getUltraSrtFcst", {
     params: {
+      serviceKey: functions.config().data_ko.key,
       pageNo: 1,
       numOfRows: 50,
       dataType: "JSON",

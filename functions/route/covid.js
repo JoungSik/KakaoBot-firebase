@@ -14,7 +14,6 @@ const local_covid = require("../api/covid");
 router.get("/", (req, res) => {
   const date = _.isEmpty(req.query.date) ? moment().format("YYYYMMDD") : req.query.date;
   local_covid(date).then((r) => {
-    console.log(_.isEmpty(r.data.response.body.items));
     if (_.isEmpty(r.data.response.body.items)) {
       res.status(200).json({ msg: `${moment().format("LLLL")} 코로나 데이터는 발표 전 입니다.` });
     } else {
