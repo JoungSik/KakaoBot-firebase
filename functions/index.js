@@ -8,9 +8,11 @@ const app = express();
 const covidRouter = require("./route/covid");
 const weatherRouter = require("./route/weather");
 const luckRouter = require("./route/luck");
+const dustRouter = require("./route/dust");
 
 app.use("/covid", covidRouter);
 app.use("/weather", weatherRouter);
 app.use("/luck", luckRouter);
+app.use("/dust", dustRouter);
 
 module.exports.v1 = functions.https.onRequest(app);
