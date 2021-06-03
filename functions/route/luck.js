@@ -123,7 +123,7 @@ router.get("/", (req, res) => {
             const data = luckItems[i].querySelector("h5.adv").querySelector("em").textContent;
             answers.push(`${title}: ${data}`);
           }
-          const msg = `${date} ${req.query.type} 운세\n\n${value}\n\n` + answers.join("\n\n");
+          const msg = `${date} ${req.query.type} 운세\n\n${value}\n\n` + answers.join("\n");
           res.status(200).json({ msg: msg });
         }).catch(e => {
           functions.logger.error(e);
